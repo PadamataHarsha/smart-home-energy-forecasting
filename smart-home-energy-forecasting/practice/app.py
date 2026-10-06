@@ -43,7 +43,9 @@ day_start = latest_timestamp - pd.Timedelta(days=1)
 daily_history = history.loc[history.index >= day_start]
 
 daily_avg = float(daily_history.mean())
-daily_peak = float(daily_history.max())threshold = max(daily_avg * 1.5, 2.5)
+daily_peak = float(daily_history.max())
+
+threshold = max(daily_avg * 1.5, 2.5)
 
 with st.sidebar:
     st.success("Dataset ready")
