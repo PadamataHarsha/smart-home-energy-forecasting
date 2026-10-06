@@ -37,9 +37,13 @@ except Exception as exc:
 predictions = forecast_next(model, x_scaler, y_scaler, history)
 metrics = evaluate_model(model, x_scaler, y_scaler, history)
 current = float(history.iloc[-1])
-daily_avg = float(history.last("1D").mean())
-daily_peak = float(history.last("1D").max())
-threshold = max(daily_avg * 1.5, 2.5)
+
+latest_timestamp = history.index.max()
+day_start = latest_timestamp - pd.Timedelta(days=1)
+daily_history = history.loc[history.index >= day_start]
+
+daily_avg = float(daily_history.mean())
+daily_peak = float(daily_history.max())threshold = max(daily_avg * 1.5, 2.5)
 
 with st.sidebar:
     st.success("Dataset ready")
